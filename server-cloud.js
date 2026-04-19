@@ -22,13 +22,13 @@ app.post('/sessions', (req, res) => {
 app.all('/twiml/:sessionId', (req, res) => {
     const { sessionId } = req.params;
     const session = sessions[sessionId];
-    if (!session) { res.type('text/xml'); return res.send('<?xml version="1.0" encoding="UTF-8"?><Response><Say>Sistem hatasi. Kayit bulunamadi.</Say></Response>'); }
+            return res.send('<?xml version="1.0" encoding="UTF-8"?><Response><Pause length="2"/><Say>Sistem hatasi. Kayit bulunamadi.</Say></Response>');
     const host = req.get('host');
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const baseUrl = protocol + '://' + host;
     const escapedText = session.speechText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     res.type('text/xml');
-    res.send('<?xml version="1.0" encoding="UTF-8"?><Response><Gather action="' + baseUrl + '/webhook/' + sessionId + '" method="POST" numDigits="1" timeout="10"><Say language="tr-TR" voice="Polly.Filiz">' + escapedText + '</Say></Gather><Say language="tr-TR" voice="Polly.Filiz">Herhangi bir tus algilanmadi. Iyi gunler dileriz.</Say></Response>');
+        res.send('<?xml version="1.0" encoding="UTF-8"?><Response><Pause length="2"/><Gather action="' + baseUrl + '/webhook/' + sessionId + '" method="POST" numDigits="1" timeout="10"><Say language="tr-TR">' + escapedText + '</Say></Gather><Say language="tr-TR">Herhangi bir tus algilanmadi. Iyi gunler dileriz.</Say></Response>');
 });
 
 app.post('/webhook/:sessionId', (req, res) => {
@@ -37,7 +37,7 @@ app.post('/webhook/:sessionId', (req, res) => {
     const session = sessions[sessionId];
     if (session) { if (digits === '1') session.status = 'Evet (Katilacak)'; else if (digits === '2') session.status = 'Hayir (Katilmayacak)'; else session.status = 'Gecersiz (' + digits + ')'; }
     res.type('text/xml');
-    res.send('<?xml version="1.0" encoding="UTF-8"?><Response><Say language="tr-TR" voice="Polly.Filiz">Bilgileriniz kaydedildi. Tesekkur eder, iyi gunler dileriz.</Say></Response>');
+            res.send('<?xml version="1.0" encoding="UTF-8"?><Response><Pause length="2"/><Say language="tr-TR">Bilgileriniz kaydedildi. Tesekkur eder, iyi gunler dileriz.</Say></Response>');
 });
 
 app.get('/results', (req, res) => {
