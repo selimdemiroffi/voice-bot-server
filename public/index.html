@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+  <html lang="tr" class="scroll-smooth">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>NexGen AI - Premium Control Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+      <script src="https://unpkg.com/lucide@latest"></script>
+      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+      <style>
+          :root {
+              --bg-color: #05070a;
+            --accent-blue: #3b82f6;
+            --accent-emerald: #10b981;
+            --card-glass: rgba(13, 17, 23, 0.7);
+}
+        body {
+                      font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: #e2e8f0;
+                        overflow-x: hidden;
+}
+        .glass {
+                      background: var(--card-glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+}
+        .premium-border { position: relative; }
+    </style>
+          </head>
+          <body class="p-8">
+              <!-- UI content simplified for reconstruct -->
+              <div class="max-w-7xl mx-auto space-y-8">
+                  <header class="flex justify-between items-center">
+                      <h1 class="text-4xl font-bold">NexGen AI</h1>
+                      <div id="active-num-selector"></div>
+                  </header>
+                  <div id="client-list"></div>
+                  <div id="qrcode"></div>
+              </div>
+              <script>
+                  lucide.createIcons();
+        const socket = io();
+        socket.on('update', (data) => {
+                      console.log('Data updated', data);
+});
+    </script>
+      </body>
+      </html>
