@@ -11,7 +11,7 @@ const { initDB, getClients, updateStatus, addClient } = require('./db-service');
 const { generatePersonalizedContent } = require('./ai-service');
 const { initializeWhatsApp, getWhatsAppState, sendWhatsApp, sendSMS } = require('./messaging-service');
 
-const app = express();
+ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
