@@ -1,51 +1,64 @@
 <!DOCTYPE html>
-  <html lang="tr" class="scroll-smooth">
+<html lang="en">
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>NexGen AI - Premium Control Center</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
-      <script src="https://unpkg.com/lucide@latest"></script>
-      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-      <style>
-          :root {
-              --bg-color: #05070a;
-            --accent-blue: #3b82f6;
-            --accent-emerald: #10b981;
-            --card-glass: rgba(13, 17, 23, 0.7);
-}
-        body {
-                      font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-color);
-            color: #e2e8f0;
-                        overflow-x: hidden;
-}
-        .glass {
-                      background: var(--card-glass);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-}
-        .premium-border { position: relative; }
-    </style>
-          </head>
-          <body class="p-8">
-              <!-- UI content simplified for reconstruct -->
-              <div class="max-w-7xl mx-auto space-y-8">
-                  <header class="flex justify-between items-center">
-                      <h1 class="text-4xl font-bold">NexGen AI</h1>
-                      <div id="active-num-selector"></div>
-                  </header>
-                  <div id="client-list"></div>
-                  <div id="qrcode"></div>
-              </div>
-              <script>
-                  lucide.createIcons();
-        const socket = io();
-        socket.on('update', (data) => {
-                      console.log('Data updated', data);
-});
-    </script>
-      </body>
-      </html>
+        <meta charset="UTF-8">
+        <title>NexGen Cloud Dashboard</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  </head>
+<body class="bg-gray-900 text-white p-8">
+    <div class="max-w-6xl mx-auto space-y-6">
+            <header class="flex justify-between items-center bg-gray-800 p-6 rounded-xl">
+                        <h1 class="text-2xl font-bold">NexGen Cloud</h1>h1>
+                        <div class="flex gap-4">
+                                        <button onclick="document.getElementById('manualModal').classList.remove('hidden')" class="bg-gray-700 px-4 py-2 rounded-lg">Add Manual</button>button>
+                                        <div id="wa-status" class="text-yellow-500 text-sm">WhatsApp Pending...</div>div>
+                                        <button onclick="socket.emit('get-qr')" class="bg-blue-600 px-4 py-2 rounded-lg">Show QR</button>button>
+                        </div>div>
+            </header>header>
+            <main class="bg-gray-800 rounded-xl overflow-hidden shadow-lg">
+                        <table class="w-full text-left">
+                                        <thead class="bg-gray-700 text-gray-400 text-xs uppercase">
+                                                            <tr>
+                                                                                      <th class="px-6 py-4">Client</th>th>
+                                                                                      <th class="px-6 py-4">Action</th>th>
+                                                                                      <th class="px-6 py-4">Status</th>th>
+                                                                                      <th class="px-6 py-4">Control</th>th>
+                                                            </tr>
+                                        </thead>thead>
+                                          <tbody id="client-list" class="divide-y divide-gray-700">
+                                                                <tr><td colspan="4" class="p-10 text-center">Loading...</td>td></tr>
+                                          </tbody>tbody>
+                        </table>table>
+            </main>main>
+    </div>div>
+    <div id="manualModal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center p-4">
+            <div class="bg-gray-800 p-8 rounded-2xl w-full max-w-sm space-y-4">
+                        <h3 class="text-xl font-bold">Add Manual Record</h3>h3>
+                        <input id="m_name" placeholder="Name" class="w-full bg-gray-900 p-3 rounded-lg">
+                        <input id="m_phone" placeholder="Phone" class="w-full bg-gray-900 p-3 rounded-lg">
+                        <input id="m_event" placeholder="Note" class="w-full bg-gray-900 p-3 rounded-lg">
+                        <button onclick="manualAdd()" class="w-full bg-blue-600 p-3 rounded-lg font-bold">SAVE</button>button>
+                        <button onclick="document.getElementById('manualModal').classList.add('hidden')" class="w-full text-gray-500">Cancel</button>button>
+            </div>div>
+    </div>div>
+    <div id="qrModal" class="fixed inset-0 bg-black/90 hidden flex items-center justify-center p-4">
+            <div class="bg-white p-8 rounded-3zl text-center space-y-4">
+                        <canvas id="qr-canvas"></canvas>canvas>
+                        <button onclick="document.getElementById('qrModal').classList.add('hidden')" class="bg-black text-white p-2">CLOSE</button>button>
+            </div>div>
+    </div>div>
+    <script>
+              const socket = io();
+              socket.on('clients', (clients) => {
+                            document.getElementById('client-list').innerHTML = clients.map(c => `
+                                            <tr class="hover:bg-gray-700">
+                                                                <td class="px-6 py-4">${c.ad} <br> <span class="text-xs text-gray-500">${c.telefon}</span></td>
+                                                                                    <td class="px-6 py-4">${c.islem}</td>
+                                                                                                        <td class="px-6 py-4">${c.durum || 'WAITING'}</td>
+                                                                                                                            <td class="px-6 py-4 flex gap-2">
+                                                                                                                                                    <button onclick="apiAction('${c.telefon}', 'call')">
+    </script></tr>
+                                                            </tr></title>
+  </head>
