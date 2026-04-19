@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+        <meta charset="UTF-8">
+        <title>Saglikli Yasam Formu - Herbalife</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <style>
+                body { font-family: sans-serif; background-color: #f3f4f6; }
+                .herbalife-bg { background-color: #43b02a; }
+            </style>
+  </head>
+  <body class="p-8">
+        <div class="max-w-md mx-auto bg-white rounded-3xl shadow-xl overflow-hidden text-center">
+                  <div class="herbalife-bg p-8">
+                                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Herbalife_Logo.svg/2560px-Herbalife_Logo.svg.png" alt="Herbalife" class="w-32 mx-auto mb-4">
+                                <h1 class="text-2xl font-bold text-white">Saglikli Yasam Formu</h1>h1>
+                  </div>div>
+                  <form class="p-8 space-y-4" id="kayit-form">
+                                <input type="text" placeholder="Ad Soyad" name="ad" required class="w-full p-3 rounded-xl border">
+                                <input type="tel" placeholder="Telefon" name="telefon" required class="w-full p-3 rounded-xl border">
+                                <button type="submit" class="w-full herbalife-bg text-white py-3 rounded-xl font-bold">Kaydi Tamamla</button>button>
+                  </form>form>
+        </div>div>
+        <script>
+                  document.getElementById('kayit-form').addEventListener('submit', async (e) => {
+                                e.preventDefault();
+                                const formData = new FormData(e.target);
+                                const data = Object.fromEntries(formData);
+                                const res = await fetch('/api/kayit', {
+                                                  method: 'POST',
+                                                  headers: { 'Content-Type': 'application/json' },
+                                                  body: JSON.stringify(data)
+                                });
+                                if (res.ok) alert('Kaydiniz alindi!');
+                  });
+        </script>
+  </body>body>
+</html>html>
+        </script>
+      </style></title>
+  </head>
